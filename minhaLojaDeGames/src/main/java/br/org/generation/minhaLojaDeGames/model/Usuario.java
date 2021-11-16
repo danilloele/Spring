@@ -1,5 +1,8 @@
 package br.org.generation.minhaLojaDeGames.model;
 
+import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +12,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table (name= "tb_usuarios")
@@ -28,6 +33,11 @@ public class Usuario {
 	@NotBlank(message = "A inserção da senha é obrigatória.")
 	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
 	private String senha;
+	
+	@Column(name= "data_nascimento")
+	@JsonFormat(pattern= "yyyy-MM-dd")
+	@NotNull(message= "A inserção da data de nascimento é obrigatória.")
+	private LocalDate dataNascimento;
 
 	public long getId() {
 		return id;
@@ -59,6 +69,14 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 	
 	

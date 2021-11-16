@@ -28,6 +28,9 @@ public class UsuarioService {
 			throw new ResponseStatusException(
 						HttpStatus.BAD_REQUEST, "O Usuário já existe!", null);
 		
+		if (calcularIdade(usuario.getDataNascimento()) <18)
+			throw new ResponseStatusException(
+					    HttpStatus.BAD_REQUEST, "O usuário é menor de idade!", null);
 		
 		usuario.setSenha(criptografarSenha(usuario.getSenha()));
 
@@ -46,6 +49,10 @@ public class UsuarioService {
 				if(buscaUsuario.get().getId() != usuario.getId())
 					throw new ResponseStatusException(
 						HttpStatus.BAD_REQUEST, "O Usuário já existe!", null);
+				
+				if (calcularIdade(usuario.getDataNascimento()) <18)
+					throw new ResponseStatusException(
+							    HttpStatus.BAD_REQUEST, "O usuário é menor de idade!", null);
 			}
 	
 			usuario.setSenha(criptografarSenha(usuario.getSenha()));
@@ -104,10 +111,10 @@ public class UsuarioService {
 		return "Basic " + new String(tokenBase64);
 
 	}
-	/*
-	private int calcularIdade (LocalDate dataNascimento)
-	{
+
+	private int calcularIdade (LocalDate dataNascimento) {
+		
 		return Period.between (dataNascimento, LocalDate.now()).getYears();
 	}
-	*/
+	
 }
